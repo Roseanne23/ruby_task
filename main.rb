@@ -24,6 +24,24 @@ persons = [
 ]
 #puts persons
 
+puts "Do you want to add or delete user?(add/delete)"
+answer = gets.chomp.downcase
+
+if answer == "delete"
+  puts "Which national ID you want to delete?"
+  national_id = gets.chomp.to_i
+
+  if persons.any? {|person| person[:national_id] == national_id}
+    persons = persons.reject {|person| person[:national_id] == national_id}
+    puts "Successfully deleted."
+    puts persons
+
+  else
+    persons.any? {|person| person[:national_id] == national_id}
+    puts "User not found"
+    end
+end
+
 puts "Please enter your national id"
 national_id = gets.chomp.to_i
 
@@ -33,7 +51,7 @@ else
   puts "What is your name?"
 end
 name = gets.chomp
-puts "What is your age  ?"
+puts "What is your age?"
 age = gets.chomp.to_i
 
 new_person = {national_id: national_id, name: name, age: age}
