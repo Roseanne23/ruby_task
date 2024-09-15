@@ -1,5 +1,6 @@
 #```ruby
-#  ```
+# ```
+
 persons = [
   { national_id: 1, name: "Joe", age: 20},
   { national_id: 2, name: "Mark", age: 15},
@@ -22,40 +23,58 @@ persons = [
   { national_id: 19, name: "Anna", age: 17},
   { national_id: 20, name: "Rick", age: 78}
 ]
-#puts persons
 
-puts "Do you want to add or delete user?(add/delete)"
-answer = gets.chomp.downcase
+loop = true
+while loop
+  puts "Do you want to add, delete, or exit? (add/delete/exit)"
+  answer = gets.chomp.downcase
 
-if answer == "delete"
-  puts "Which national ID you want to delete?"
-  national_id = gets.chomp.to_i
+  if answer == "exit"
+    loop = false
+    puts "Exit program."
+  elsif answer == "delete"
+    puts "Which national ID you want to delete?"
+    national_id = gets.chomp.to_i
 
-  if persons.any? {|person| person[:national_id] == national_id}
-    persons = persons.reject {|person| person[:national_id] == national_id}
-    puts "Successfully deleted."
-    puts persons
-
-  else
-    persons.any? {|person| person[:national_id] == national_id}
-    puts "User not found"
+    if persons.any? { |h| h[:national_id] == national_id }
+      persons = persons.reject { |i| i[:national_id] == national_id }
+      puts "Successfully deleted."
+      puts persons
+    else
+      puts "User not found."
     end
+
+  elsif answer == "add"
+    puts "What is your national id?"
+    national_id = gets.chomp
+
+    if national_id == "exit"
+      puts "Exit program."
+    else
+      national_id = national_id.to_i
+    end
+
+    if persons.any? { |h| h[:national_id] == national_id }
+      puts "Failed to add: National ID already exists. "
+    else
+      puts "What is your name?"
+      name = gets.chomp
+      if name == "exit"
+        puts "Exit program."
+        break
+      else
+        puts "What is your age?"
+        age = gets.chomp
+        if age == "exit"
+          puts "Exit program."
+        else
+          age = age.to_i
+          new_user = { national_id: national_id, name: name, age: age }
+          persons.insert(0, new_user)
+          puts "User added successfully!"
+          puts persons
+        end
+      end
+    end
+  end
 end
-
-puts "Please enter your national id"
-national_id = gets.chomp.to_i
-
-if persons.any? {|person| person[:national_id] == national_id}
-  puts "Failed to add: National ID already exists."
-else
-  puts "What is your name?"
-end
-name = gets.chomp
-puts "What is your age?"
-age = gets.chomp.to_i
-
-new_person = {national_id: national_id, name: name, age: age}
-persons.insert(0, new_person)
-
-puts "User added successfully!"
-puts persons
