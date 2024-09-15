@@ -31,7 +31,11 @@ while loop
 
   if answer == "exit"
     loop = false
-    puts "Exit program."
+    puts "Are you sure you want to exit (y/n)?"
+    exit_answer = gets.chomp.downcase
+    exit_answer == "y" ? loop = false : exit
+    puts "Exit program"
+
   elsif answer == "delete"
     puts "Which national ID you want to delete?"
     national_id = gets.chomp.to_i
@@ -72,7 +76,7 @@ while loop
           new_user = { national_id: national_id, name: name, age: age }
           persons.insert(0, new_user)
           puts "User added successfully!"
-          puts persons.last(20)
+          puts persons
         end
       end
     end
