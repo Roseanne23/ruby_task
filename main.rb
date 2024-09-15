@@ -26,7 +26,7 @@ persons = [
 
 loop = true
 while loop
-  puts "Do you want to add, delete, or exit? (add/delete/exit)"
+  puts "Do you want to add, delete, search, edit, or exit? (add/delete/exit)"
   answer = gets.chomp.downcase
 
   if answer == "exit"
@@ -72,9 +72,45 @@ while loop
           new_user = { national_id: national_id, name: name, age: age }
           persons.insert(0, new_user)
           puts "User added successfully!"
-          puts persons
+          puts persons.last(20)
         end
       end
     end
+  elsif answer == "search"
+    puts "Enter national id or name"
+    search = gets.chomp
+    person = persons.find { |p| p[:national_id].to_s == search || p[:name].downcase == search.downcase }
+
+    if person
+      puts "User found: National ID: #{person[:national_id]}, Name: #{person[:name]}, Age: #{person[:age]}"
+    else
+      puts "User not found."
+    end
+
+  elsif answer == "edit"
+    puts "Which national ID you want to edit?"
+    national_id = gets.chomp.to_i
+    edit_user = persons.find { |p| p[:national_id] == national_id }
+    if edit_user
+      puts "Person found: National ID: #{edit_user[:national_id]}, Name: #{edit_user[:name]}, Age: #{edit_user[:age]}"
+      if edit_user
+        puts "Editing Person: National ID: #{edit_user[:national_id]}, Name: #{edit_user[:name]}, Age: #{edit_user[:age]}"
+        puts "Enter the new name #{edit_user[:name]}:"
+        new_name = gets.chomp
+        new_name = edit_user[:name] if new_name.empty?
+
+        puts "Enter new age #{edit_user[:age]}:"
+        new_age = gets.chomp
+        new_age = new_age.to_i if new_age != edit_user[:age]
+
+        edit_user[:name] = new_name
+        edit_user[:age] = new_age
+
+        puts "person updated successfully!"
+        puts persons.last(20)
+      end
+    end
+  else
+    puts "Invalid input."
   end
 end
