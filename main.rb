@@ -24,8 +24,8 @@ persons = [
   { national_id: 20, name: "Rick", age: 78}
   ]
 
-loop = true
-while loop
+$loop = true
+while $loop
 
 def start
     puts "Do you want to add, delete, search, edit, or exit? (add/delete/exit)"
@@ -35,6 +35,10 @@ def exit
   answer = gets.chomp
   if answer == "y"
     puts "exit program."
+    $loop = false
+  else
+    answer == "n"
+    puts "Go back"
   end
 end
 
@@ -101,14 +105,13 @@ def edit(persons)
   end
 end
 
-puts persons.first(10)
+puts persons.last(5)
 start
 answer = gets.chomp.downcase
 
 case answer
 when "exit"
   exit
-  break
 when "delete"
   delete(persons)
 when "add"
