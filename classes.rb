@@ -1,4 +1,4 @@
-class Person
+class Residents
   attr_accessor :name, :age, :national_id
 
   persons = [
@@ -25,9 +25,10 @@ class Person
   ]
 
   persons.each do |person|
-    new_person = Person.new
-    new_person.name = person[:name]
-    new_person.national_id = person[:national_id]
-    new_person.age = person[:age]
+    new_resident = Residents.new
+    new_resident.name = person[:name]
+    new_resident.national_id = person[:national_id]
+    new_resident.age = person[:age]
+    new_resident.save
   end
 end
