@@ -1,6 +1,3 @@
-#```ruby
-# ```
-
 persons = [
   { national_id: 1, name: "Joe", age: 20},
   { national_id: 2, name: "Mark", age: 15},
@@ -23,25 +20,20 @@ persons = [
   { national_id: 19, name: "Anna", age: 17},
   { national_id: 20, name: "Rick", age: 78}
   ]
-
-$loop = true
-while $loop
-
 def start
-    puts "Do you want to add, delete, search, edit, or exit? (add/delete/exit)"
+  puts "Do you want to add, delete, search, edit, or exit? (add/delete/exit)"
 end
 def exit
   puts "are you sure you want to exit (y/n)?"
   answer = gets.chomp
+
   if answer == "y"
     puts "exit program."
-    $loop = false
   else
     answer == "n"
     puts "Go back"
   end
 end
-
 def delete(persons)
     puts "Which national ID you want to delete?"
     national_id = gets.chomp.to_i
@@ -57,68 +49,67 @@ end
 def add(persons)
    puts "What is your national id?"
    national_id = gets.chomp.to_i
-
-   if persons.any? { |h| h[:national_id] == national_id }
+  if persons.any? { |h| h[:national_id] == national_id }
     puts "Failed to add: National ID already exists. "
   else
     puts "What is your name?"
     name = gets.chomp
     puts "What is your age?"
-    age = gets.chomp
-    age = age.to_i
+    age = gets.chomp.to_i
     new_user = { national_id: national_id, name: name, age: age }
     persons.insert(0, new_user)
     puts "User added successfully!"
-    end
+  end
 end
 def search(persons)
   puts "Enter national id or name"
   search = gets.chomp
   person = persons.find { |p | p[:national_id].to_s == search || p[:name].downcase == search.downcase }
+
   if person
-    puts "User found: National ID: #{person[:national_id]}, Name: #{person[:name]}, Age: #{person[:age]}"
+   puts "User found: National ID: #{person[:national_id]}, Name: #{person[:name]}, Age: #{person[:age]}"
+  else
+   puts "User not found."
+  end
+end
+def edit(persons)
+  puts "Which national ID you want to edit?"
+  national_id = gets.chomp.to_i
+  person = persons.find { |p| p[:national_id] == national_id }
+
+  if person
+    puts "Person found: National ID: #{person[:national_id]}, Name: #{person[:name]}, Age: #{person[:age]}"
+    puts "Editing Person: National ID: #{person[:national_id]}, Name: #{person[:name]}, Age: #{person[:age]}"
+    puts "Enter the new name #{person[:name]}:"
+    new_name = gets.chomp
+
+    new_name = person[:name] if new_name.empty?
+      puts "Enter new age #{person[:age]}:"
+
+    new_age = gets.chomp.to_i if new_age != person[:age]
+      person[:name] = new_name
+      person[:age] = new_age
+    puts "person updated successfully!"
   else
     puts "User not found."
   end
 end
 
-def edit(persons)
-  puts "Which national ID you want to edit?"
-  national_id = gets.chomp.to_i
-  edit_user = persons.find { |p| p[:national_id] == national_id }
-
-  if edit_user
-    puts "Person found: National ID: #{edit_user[:national_id]}, Name: #{edit_user[:name]}, Age: #{edit_user[:age]}"
-
-     if edit_user
-      puts "Editing Person: National ID: #{edit_user[:national_id]}, Name: #{edit_user[:name]}, Age: #{edit_user[:age]}"
-      puts "Enter the new name #{edit_user[:name]}:"
-      new_name = gets.chomp
-      new_name = edit_user[:name] if new_name.empty?
-      puts "Enter new age #{edit_user[:age]}:"
-      new_age = gets.chomp
-      new_age = new_age.to_i if new_age != edit_user[:age]
-      edit_user[:name] = new_name
-      edit_user[:age] = new_age
-      puts "person updated successfully!"
-     end
-  end
-end
-
+while  true
 puts persons.last(5)
 start
-answer = gets.chomp.downcase
+answer = gets.chomp
 
 case answer
-when "exit"
+ when "exit"
   exit
-when "delete"
+ when "delete"
   delete(persons)
-when "add"
+ when "add"
   add(persons)
-when "search"
+ when "search"
   search(persons)
-when "edit"
+ when "edit"
   edit(persons)
 else
   puts "Invalid input"
