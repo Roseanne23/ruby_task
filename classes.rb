@@ -9,7 +9,6 @@ class Residents
   def save
     @@records << self
   end
-
   def self.all_records
     @@records
   end
@@ -38,12 +37,10 @@ class Residents
   ]
 
   persons.each do |person|
-    new_resident = Residents.new(20, "Rick",78)
-    new_resident.name = person[:name]
-    new_resident.national_id = person[:national_id]
-    new_resident.age = person[:age]
+    new_resident = Residents.new(person[:name], person[:age], person[:national_id])
     new_resident.save
   end
 end
 
-puts Residents
+residents = Residents
+p residents.all_records
