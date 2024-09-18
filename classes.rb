@@ -1,5 +1,18 @@
 class Residents
   attr_accessor :name, :age, :national_id
+  def initialize(name, age, national_id)
+    @name = name
+    @age = age
+    @national_id = national_id
+  end
+  @@records = []
+  def save
+    @@records << self
+  end
+
+  def self.all_records
+    @@records
+  end
 
   persons = [
     { national_id: 1, name: "Joe", age: 20},
@@ -25,10 +38,12 @@ class Residents
   ]
 
   persons.each do |person|
-    new_resident = Residents.new
+    new_resident = Residents.new(20, "Rick",78)
     new_resident.name = person[:name]
     new_resident.national_id = person[:national_id]
     new_resident.age = person[:age]
     new_resident.save
   end
 end
+
+puts Residents
